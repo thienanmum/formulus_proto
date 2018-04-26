@@ -7,6 +7,6 @@ import org.cas.formulus.entity.Formulation;
 public interface FormulationService {
 	Collection<Formulation> getAllFormulation();
 	Formulation saveFormulation(Formulation formulation);
-	void deleteFormulation(int formulationId);
-	Formulation getFormulationById(int id);
+	void deleteFormulation(String formulationId);
+	Formulation getFormulationById(String id);
 }

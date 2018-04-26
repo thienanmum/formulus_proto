@@ -1,17 +1,17 @@
-package org.cas.formulus.entity;
+package riakdemo.demo;
 
 public class Formulation {
-	private String id;
+	private int Id;
 	private String purpose;
 	private String target;
 	private String physicalForm;
 	private String applicationTechnique;
 	
-	public String getId() {
-		return id;
+	public int getId() {
+		return Id;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setId(int id) {
+		Id = id;
 	}
 	public String getPurpose() {
 		return purpose;
@@ -36,12 +36,5 @@ public class Formulation {
 	}
 	public void setApplicationTechnique(String applicationTechnique) {
 		this.applicationTechnique = applicationTechnique;
-	}
-
-	public void copy(Formulation other) {
-		this.setApplicationTechnique(other.getApplicationTechnique());
-		this.setPhysicalForm(other.getPhysicalForm());
-		this.setTarget(other.getTarget());
-		this.setPurpose(other.getPurpose());
-	}
+	}	
 }

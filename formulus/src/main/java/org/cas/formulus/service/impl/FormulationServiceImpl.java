@@ -3,48 +3,40 @@ package org.cas.formulus.service.impl;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.cas.formulus.data.FormulationRepo;
 import org.cas.formulus.entity.Formulation;
 import org.cas.formulus.service.FormulationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class FormulationServiceImpl implements FormulationService {
+	@Autowired
+	private FormulationRepo repo;
 
 	@Override
 	public Collection<Formulation> getAllFormulation() {
-		Collection<Formulation> result = new ArrayList<Formulation>();
-		
-		// Dummy
-		Formulation f1 = new Formulation();
-		f1.setId(1);
-		f1.setApplicationTechnique("Spray");
-		f1.setPhysicalForm("Liquid");
-		f1.setTarget("Fusarium");
-		
-		result.add(f1);
-		
-		return result;
+		return repo.getAll();
 	}
 
 	@Override
 	public Formulation saveFormulation(Formulation formulation) {
-		return formulation;
+		if (formulation.getId() == null || formulation.getId() == "") {
+			return repo.insert(formulation);
+		} else {
+			return repo.update(formulation);
+		}
 	}
 
 	@Override
-	public void deleteFormulation(int formulationId) {
-		System.out.println("Delete Formulation with Id: " + formulationId);		
+	public void deleteFormulation(String formulationId) {
+		System.out.println("Delete Formulation with Id: " + formulationId);
+		repo.delete(formulationId);
 	}
 
 	@Override
-	public Formulation getFormulationById(int id) {
-		// Dummy
-		Formulation f1 = new Formulation();
-		f1.setId(1);
-		f1.setApplicationTechnique("Drink");
-		f1.setPhysicalForm("Spills");
-		f1.setTarget("Fusarium");
-		return f1;
+	public Formulation getFormulationById(String formulationId) {
+		return repo.getById(formulationId);
 	}
 
 }

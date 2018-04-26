@@ -27,23 +27,23 @@ public class FormulationController {
 	
 	@RequestMapping(value= {"","/"}, method=RequestMethod.POST)
 	public Formulation createFormulation(@RequestBody Formulation formulation) {
-		formulation.setId(0);
+		formulation.setId("");
 		return formulationService.saveFormulation(formulation);				
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
-	public Formulation updateFormulation(@RequestBody Formulation formulation, @PathVariable int id) {
+	public Formulation updateFormulation(@RequestBody Formulation formulation, @PathVariable String id) {
 		formulation.setId(id);
 		return formulationService.saveFormulation(formulation);
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public void deleteFormulation(@PathVariable int id) {
+	public void deleteFormulation(@PathVariable String id) {
 		formulationService.deleteFormulation(id);
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public Formulation getFormulation(@PathVariable int id) {
+	public Formulation getFormulation(@PathVariable String id) {
 		return formulationService.getFormulationById(id);
 	}	
 }

@@ -28,15 +28,18 @@ public class FormulationRepo {
     private Location m_idLocations;
 
     public FormulationRepo() {
-        RiakNode node = new RiakNode.Builder().withRemoteAddress("127.0.0.1").withRemotePort(8098).build();
+        m_bucket = new Namespace("formulations");
+        m_idLocations = new Location(new Namespace("set", "idset"), "locid");
+    }
+
+    private void connect() {
+        RiakNode node = new RiakNode.Builder().withRemoteAddress("127.0.0.1").build();
         RiakCluster cluster = RiakCluster.builder(node).build();
         cluster.start();
         m_client = new RiakClient(cluster);
-        m_bucket = new Namespace("formulations");
-        m_idLocations = new Location(new Namespace("sets", "sets"), "locids");
     }
 
-    public Formulation getById(String id) {
+    private Formulation internalGetById(String id) {
         Location location = new Location(m_bucket, id);
         FetchValue fv = new FetchValue.Builder(location).build();
         try {
@@ -50,9 +53,15 @@ public class FormulationRepo {
         return null;
     }
 
+    public Formulation getById(String id) {
+        connect();
+        return internalGetById(id);
+    }
+
     public Collection<Formulation> getAll() {
+        connect();
         ArrayList<Formulation> result = new ArrayList<>();
-        getAllKeys().forEach(s -> result.add(getById(s)));
+        getAllKeys().forEach(s -> result.add(internalGetById(s)));
         return result;
     }
 
@@ -73,6 +82,8 @@ public class FormulationRepo {
     }
 
     public Formulation insert(Formulation formulation) {
+        connect();
+
         String key = UUID.randomUUID().toString();
         formulation.setId(key);
 
@@ -97,6 +108,7 @@ public class FormulationRepo {
     }
 
     public Formulation update(Formulation formulation) {
+        connect();
         Location location = new Location(m_bucket, formulation.getId());
         FormulationUpdate updatedFormulation = new FormulationUpdate(formulation);
         UpdateValue uv = new UpdateValue.Builder(location).withUpdate(updatedFormulation).build();
@@ -112,6 +124,7 @@ public class FormulationRepo {
     }
 
     public void delete(String id) {
+        connect();
         Location location = new Location(m_bucket, id);
         DeleteValue dv = new DeleteValue.Builder(location).build();
         try {

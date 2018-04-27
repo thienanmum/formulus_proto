@@ -26,12 +26,14 @@ public class FormulationController {
 	}
 	
 	@RequestMapping(value= {"","/"}, method=RequestMethod.POST)
+	@ResponseBody
 	public Formulation createFormulation(@RequestBody Formulation formulation) {
 		formulation.setId("");
 		return formulationService.saveFormulation(formulation);				
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
+	@ResponseBody
 	public Formulation updateFormulation(@RequestBody Formulation formulation, @PathVariable String id) {
 		formulation.setId(id);
 		return formulationService.saveFormulation(formulation);
@@ -43,6 +45,7 @@ public class FormulationController {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
+	@ResponseBody
 	public Formulation getFormulation(@PathVariable String id) {
 		return formulationService.getFormulationById(id);
 	}	

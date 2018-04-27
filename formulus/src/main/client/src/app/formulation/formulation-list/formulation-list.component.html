@@ -1,0 +1,35 @@
+<h2>Formulation List</h2>
+<a [routerLink]="['/formulation/add']">Add Formulation</a>
+<mat-table [dataSource] = "formulations">
+  <ng-container matColumnDef="id">
+    <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
+    <mat-cell *matCellDef="let formulation"> {{formulation.id}}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="purpose">
+    <mat-header-cell *matHeaderCellDef>Purpose</mat-header-cell>
+    <mat-cell *matCellDef="let formulation"> {{formulation.purpose}}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="target">
+    <mat-header-cell *matHeaderCellDef>Target</mat-header-cell>
+    <mat-cell *matCellDef="let formulation"> {{formulation.target}}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="applicationTechnique">
+    <mat-header-cell *matHeaderCellDef>Application Technique</mat-header-cell>
+    <mat-cell *matCellDef="let formulation"> {{formulation.applicationTechnique}}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="physicalForm">
+    <mat-header-cell *matHeaderCellDef>Physical Form</mat-header-cell>
+    <mat-cell *matCellDef="let formulation"> {{formulation.physicalForm}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+    <mat-cell *matCellDef="let formulation">
+      <a [routerLink]="['/formulation/edit', formulation.id]">Edit</a>
+      <a [routerLink]="['/formulation/delete', formulation.id]">Delete</a>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+  <mat-row *matRowDef="let formulations; columns: columnsToDisplay"></mat-row>
+</mat-table>
